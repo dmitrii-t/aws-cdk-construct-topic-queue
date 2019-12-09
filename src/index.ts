@@ -6,18 +6,12 @@ import * as sns from '@aws-cdk/aws-sns';
 import {Topic} from '@aws-cdk/aws-sns';
 import {SqsSubscription} from '@aws-cdk/aws-sns-subscriptions';
 import * as lambda from '@aws-cdk/aws-lambda';
-import {Code, Runtime} from '@aws-cdk/aws-lambda';
 import {SqsEventSource} from '@aws-cdk/aws-lambda-event-sources';
 
 interface TopicQueueWithHandlerProps extends sqs.QueueProps {
   id: string;
+  sqsEventHandler: lambda.FunctionProps
 }
-
-const lambdaProps = {
-  handler: 'lambda.handleSQSEvent',
-  runtime: Runtime.NODEJS_10_X,
-  code: Code.fromAsset('./dist'),
-};
 
 /**
  * Builds the stack
@@ -72,7 +66,7 @@ export class TopicQueueWithHandlerConstruct extends Construct {
     });
 
     // Queue handler
-    this.queueHandler = new lambda.Function(scope, 'QueueHandler', lambdaProps);
+    this.queueHandler = new lambda.Function(scope, 'QueueHandler', props.sqsEventHandler);
     this.queueHandler.addEventSource(new SqsEventSource(this.queue));
 
     // Creates raw message subscription

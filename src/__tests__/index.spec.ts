@@ -9,11 +9,18 @@ import {deployStack, destroyStack, withStack} from 'cdk-util';
 import * as AWS from 'aws-sdk';
 import {getLogEventInGroup} from "./aws-util";
 import {Body} from "../Body";
+import {Code, Runtime} from "@aws-cdk/aws-lambda";
 
 /**
  * CDK output directory
  */
 const CdkOut = path.resolve('cdk.out');
+
+const sqsEventHandler = {
+  handler: 'lambda.echoSQSEventHandler',
+  runtime: Runtime.NODEJS_10_X,
+  code: Code.fromAsset('./dist'),
+};
 
 describe('given cdk stack which creates a topic backed by queue with echo handler', () => {
   /**
@@ -23,7 +30,7 @@ describe('given cdk stack which creates a topic backed by queue with echo handle
     constructor(scope: App, id: string) {
       super(scope, id);
 
-      const construct = new TopicQueueWithHandlerConstruct(this, {id});
+      const construct = new TopicQueueWithHandlerConstruct(this, {id, sqsEventHandler});
 
       // Outputs
       new CfnOutput(this, 'QueueUrl', {value: construct.queueUrl});
