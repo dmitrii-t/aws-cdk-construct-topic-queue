@@ -8,7 +8,7 @@ import * as path from 'path';
 import {deployStack, destroyStack, withStack} from 'cdk-util';
 import * as AWS from 'aws-sdk';
 import {getLogEventInGroup} from "./aws-util";
-import {Message} from "../Message";
+import {Body} from "../Body";
 
 /**
  * CDK output directory
@@ -56,7 +56,7 @@ describe('given cdk stack which creates a topic backed by queue with echo handle
     const cwLogsClient = new AWS.CloudWatchLogs();
 
     // When
-    const message: Message = {};
+    const message: Body = {};
     const messageStr = JSON.stringify(message);
     await snsClient.publish({
       TopicArn: topicArn, Message: messageStr
