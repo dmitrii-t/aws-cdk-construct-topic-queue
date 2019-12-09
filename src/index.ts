@@ -75,7 +75,12 @@ export class TopicQueueWithHandlerConstruct extends Construct {
     this.queueHandler = new lambda.Function(scope, 'QueueHandler', lambdaProps);
     this.queueHandler.addEventSource(new SqsEventSource(this.queue));
 
+    // Creates raw message subscription
+    const topicSubscription = new SqsSubscription(this.queue, {
+      rawMessageDelivery: true
+    });
+
     // Adds subscription to the topic
-    this.topic.addSubscription(new SqsSubscription(this.queue));
+    this.topic.addSubscription(topicSubscription);
   }
 }

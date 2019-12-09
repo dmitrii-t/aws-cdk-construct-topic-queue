@@ -1,23 +1,24 @@
 import 'source-map-support/register';
-import {SNSMessage, SQSEvent, SQSRecord} from 'aws-lambda';
+import {SQSEvent, SQSRecord} from 'aws-lambda';
 import {Message} from "./Message";
 
 export async function handleSQSEvent(event: SQSEvent) {
   console.log(`Handled SQS Event ${JSON.stringify(event)}`);
 
-  event.Records.forEach((message: SQSRecord) => {
+  // Processing messages in async manier
+  await Promise.all(event.Records.map(message => {
     try {
       handleMessage(message);
 
     } catch (e) {
-      console.error(`Fail to process SQS msg ${message.messageId}`, e);
+      console.error(`Fail to process parsed msg ${message.messageId}`, e);
     }
-  });
+  }));
 };
 
-function handleMessage(sqsMessage: SQSRecord) {
-  const snsMessage: SNSMessage = JSON.parse(sqsMessage.body);
-  const message: Message = JSON.parse(snsMessage.Message);
+async function handleMessage(sqsMessage: SQSRecord) {
+  console.info(`parsing sqs message ${JSON.stringify(sqsMessage)}`);
+  const message: Message = JSON.parse(sqsMessage.body);
   console.log(`processing message ${JSON.stringify(message)}`);
 }
 

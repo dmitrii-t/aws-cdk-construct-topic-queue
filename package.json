@@ -11,6 +11,7 @@
   },
   "scripts": {
     "": "TS_NODE_PROJECT=tsconfig.json babel ./src --out-dir ./dist --extensions \".ts\" --ignore \"src/__tests__/**/*\" --source-maps",
+    "clean": "rimraf ./dist",
     "build": "TS_NODE_PROJECT=tsconfig.json NODE_ENV=production env-cmd webpack -p",
     "test": "TS_NODE_PROJECT=tsconfig.json env-cmd mocha --timeout 600000 --require ./babel-hook.js \"./src/__tests__/**/*.spec.ts\"",
     "lint": "tslint -c tslinton 'src/**/*.ts'",

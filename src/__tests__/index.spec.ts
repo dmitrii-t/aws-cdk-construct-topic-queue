@@ -5,7 +5,7 @@ import {App, CfnOutput, Stack} from '@aws-cdk/core';
 import {OutputLogEvent, OutputLogEvents} from 'aws-sdk/clients/cloudwatchlogs';
 import {expect} from 'chai';
 import * as path from 'path';
-import {deployStack, describeStack, destroyStack, withStack} from 'cdk-util';
+import {deployStack, destroyStack, withStack} from 'cdk-util';
 import * as AWS from 'aws-sdk';
 import {getLogEventInGroup} from "./aws-util";
 import {Message} from "../Message";
@@ -63,7 +63,7 @@ describe('given cdk stack which creates a topic backed by queue with echo handle
     }).promise();
 
     // Wait for log record to appear
-    await wait(10);
+    await wait(20);
 
     // Then
     const queueHandlerLogEvents: OutputLogEvents = await getLogEventInGroup({
