@@ -1,11 +1,11 @@
 ### Neat'n'sweet AWS Construct which creates Topic backed by Queue with a Lambda handler
 
-Build the construct and echo handler with
+Build the construct and echo handler
 ```bash
 npm run build
 ```
 
-Test the construct with
+Test the construct
 ```bash
 npm run test
 ```

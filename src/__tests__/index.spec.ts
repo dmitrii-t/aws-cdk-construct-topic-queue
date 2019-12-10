@@ -2,7 +2,7 @@
 import {TopicQueueWithHandlerConstruct} from '../index';
 
 import {App, CfnOutput, Stack} from '@aws-cdk/core';
-import {OutputLogEvent, OutputLogEvents} from 'aws-sdk/clients/cloudwatchlogs';
+import {OutputLogEvents} from 'aws-sdk/clients/cloudwatchlogs';
 import {expect} from 'chai';
 import * as path from 'path';
 import {deployStack, destroyStack, withStack} from 'cdk-util';
@@ -68,7 +68,6 @@ describe('given cdk stack which creates a topic backed by queue with echo handle
     await snsClient.publish({
       TopicArn: topicArn, Message: messageStr
     }).promise();
-
     // Wait for log record to appear
     await wait(20);
 
@@ -80,11 +79,7 @@ describe('given cdk stack which creates a topic backed by queue with echo handle
 
     console.log(`Log Events: \n${JSON.stringify(queueHandlerLogEvents)}`);
 
-    const queueHandlerLogEvent: OutputLogEvent | undefined = queueHandlerLogEvents.find(it => it.message!!.indexOf('Handled SQS Event') > 0);
-    expect(queueHandlerLogEvent).to.exist;
-
-    // Return completed promise
-    return Promise.resolve();
+    expect(queueHandlerLogEvents.find(it => it.message!!.indexOf('Handled SQS Event') > 0)).to.exist;
   }));
 });
 
