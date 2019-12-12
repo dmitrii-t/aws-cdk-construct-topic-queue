@@ -64,9 +64,8 @@ describe('given cdk stack which creates a topic backed by queue with echo handle
 
     // When
     const message: Body = {};
-    const messageStr = JSON.stringify(message);
     await snsClient.publish({
-      TopicArn: topicArn, Message: messageStr
+      TopicArn: topicArn, Message: JSON.stringify(message)
     }).promise();
     // Wait for log record to appear
     await wait(20);
