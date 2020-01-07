@@ -11,7 +11,7 @@ Build the construct and echo handler
 npm run build
 ```
 
-Create local `.env` file with AWS credentials for your AWS deployment account
+Create local `.env` file with AWS credentials for your deployment account
 ```
 cat > .env.json <<EOF
 {
