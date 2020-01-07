@@ -1,8 +1,25 @@
 ### Neat'n'sweet AWS Construct which creates Topic backed by Queue with a Lambda handler
 
+Install the project locally
+```
+git clone https://github.com/theotherdmitrii/aws-cdk-construct-topic-queue.git
+npm install
+```
+
 Build the construct and echo handler
 ```bash
 npm run build
+```
+
+Create local `.env` file with AWS credentials for your AWS deployment account
+```
+cat > .env.json <<EOF
+{
+    "AWS_ACCESS_KEY_ID": "<provide your access key id>",
+    "AWS_SECRET_ACCESS_KEY": "<privide your scret key>",
+    "AWS_DAFAULT_REGION": "<specify default region for deployment>"
+}
+EOF
 ```
 
 Test the construct
