@@ -17,7 +17,7 @@ cat > .env.json <<EOF
 {
     "AWS_ACCESS_KEY_ID": "<provide your access key id>",
     "AWS_SECRET_ACCESS_KEY": "<privide your scret key>",
-    "AWS_DEFAULT_REGION": "<specify default region for deployment>"
+    "AWS_DEFAULT_REGION": "<specify default region to deploy>"
 }
 EOF
 ```
